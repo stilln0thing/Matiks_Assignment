@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 
 // Configure base URL - update this to your backend URL
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'https://matiks-leaderboard-backend-gdj4.onrender.com/api';
 
 const client: AxiosInstance = axios.create({
     baseURL: API_BASE_URL,
