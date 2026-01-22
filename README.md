@@ -74,3 +74,30 @@ npm run start
 
 - **Backend**: Render.com (with PostgreSQL + Redis)
 - **Frontend**: Vercel
+
+## How Data is Stored in Redis ?
+
+1️⃣ SORTED SET (leaderboard:zset)
+   ┌─────────────────────────────────────────┐
+   │  Score (rating)  │  Member (userID)     │
+   ├───────────────────┼──────────────────────┤
+   │  2945            │  "42"                │
+   │  2890            │  "156"               │
+   │  2890            │  "78"   ← ties OK    │
+   │  2756            │  "923"               │
+   │  ...             │  ...                 │
+   └─────────────────────────────────────────┘
+   
+   → Automatically sorted by score (rating)
+   → O(log N) to get rank
+
+
+2️⃣ HASH per user (user:hash:42)
+   ┌──────────────────────────────────────────┐
+   │  "username"  →  "player_42"             │
+   │  "rating"    →  "2945"                  │
+   │  "version"   →  "1705847234567"         │
+   └──────────────────────────────────────────┘
+   
+   → Stores extra data (username, version)
+   → O(1) lookup by userID
